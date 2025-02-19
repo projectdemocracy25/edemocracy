@@ -1,0 +1,150 @@
+/* Reset and Base Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  scroll-behavior: smooth;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Navigation Bar */
+.navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+
+.navbar .logo {
+  display: inline-block;
+  font-size: 24px;
+  margin-left: 20px;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  float: right;
+  margin-right: 20px;
+}
+
+.navbar .nav-links li {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.navbar .nav-links li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Hero Section */
+.hero {
+  background: url('assets/hero.jpg') no-repeat center center/cover;
+  color: white;
+  text-align: center;
+  padding: 120px 0;
+}
+
+.hero h2 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: #007BFF;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+/* Sections */
+section {
+  padding: 60px 0;
+}
+
+.features, .security {
+  background-color: #f8f8f8;
+}
+
+.features h2,
+.security h2,
+.waitlist h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.features ul, .security ul {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* Waitlist Form */
+.waitlist {
+  background-color: #fff;
+}
+
+.waitlist form {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.waitlist form input[type="email"] {
+  flex: 1 1 300px;
+  padding: 10px;
+  font-size: 18px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.waitlist form button {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.waitlist form button:hover {
+  background-color: #218838;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+footer a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+} 
