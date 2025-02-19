@@ -1,69 +1,21 @@
-import translations from './languages.js';
-
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     const waitlistForm = document.getElementById('waitlist-form');
     const formMessage = document.getElementById('form-message');
-
-    waitlistForm.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        
-        const email = document.getElementById('email').value;
-        const submitButton = waitlistForm.querySelector('button');
-        
-        try {
-            submitButton.disabled = true;
-            submitButton.textContent = 'Kaydediliyor...';
-            
-            // Burada gerçek bir API çağrısı yapılabilir
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            formMessage.textContent = "Başarıyla kaydoldunuz! Size en kısa sürede ulaşacağız.";
-            formMessage.style.color = '#059669';
-            waitlistForm.reset();
-            
-        } catch (error) {
-            formMessage.textContent = "Bir hata oluştu. Lütfen tekrar deneyin.";
-            formMessage.style.color = '#dc2626';
-            
-        } finally {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Katıl';
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Theme handling
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
-    
-    // Language handling
     const languageSelector = document.getElementById('language-selector');
-    
-    // Improved language detection
-    function detectUserLanguage() {
-        // Check localStorage first
-        const savedLang = localStorage.getItem('language');
-        if (savedLang && translations[savedLang]) {
-            return savedLang;
-        }
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
 
-        // Try to detect from navigator
-        const browserLang = navigator.language.split('-')[0];
-        if (translations[browserLang]) {
-            return browserLang;
-        }
-
-        // Default to English
-        return 'en';
+    // Theme handling
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        body.className = savedTheme;
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        body.className = 'dark-theme';
     }
 
-    // Initialize language
-    let currentLang = detectUserLanguage();
-    setLanguage(currentLang);
-    languageSelector.value = currentLang;
-    
-    // Theme toggle functionality
+    // Theme toggle
     themeToggle.addEventListener('click', function() {
         if (body.classList.contains('light-theme')) {
             body.className = 'dark-theme';
@@ -73,73 +25,126 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('theme', 'light-theme');
         }
     });
-    
-    // Language change handler
-    languageSelector.addEventListener('change', (e) => {
-        setLanguage(e.target.value);
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                // Close mobile menu if open
+                navLinks.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+            }
+        });
     });
-    
-    // Mobile menu toggle
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-    
-    mobileMenuBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        mobileMenuBtn.classList.toggle('active');
+
+    // Language popup handling
+    const languageTrigger = document.querySelector('.language-trigger');
+    const languagePopup = document.querySelector('.language-popup');
+    const languageList = document.querySelectorAll('.language-list li');
+    const languageDisplay = document.querySelector('.language-trigger span');
+
+    // Show/hide language popup
+    languageTrigger.addEventListener('click', () => {
+        languagePopup.classList.toggle('active');
     });
-    
-    // Function to set language
-    function setLanguage(lang) {
-        if (!translations[lang]) {
-            lang = 'en'; // Fallback to English
+
+    // Close popup when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!languageTrigger.contains(e.target) && !languagePopup.contains(e.target)) {
+            languagePopup.classList.remove('active');
         }
-        
-        currentLang = lang;
-        localStorage.setItem('language', lang);
-        document.documentElement.lang = lang;
-        
-        const t = translations[lang];
-        
-        // Update all text content
-        updateTextContent(t);
-    }
-    
-    function updateTextContent(t) {
-        // Navigation
-        document.querySelector('[data-i18n="nav.about"]').textContent = t.nav.about;
-        document.querySelector('[data-i18n="nav.contribute"]').textContent = t.nav.contribute;
-        document.querySelector('[data-i18n="nav.github"]').textContent = t.nav.github;
-        
-        // Hero
-        document.querySelector('[data-i18n="hero.title"]').textContent = t.hero.title;
-        document.querySelector('[data-i18n="hero.subtitle"]').textContent = t.hero.subtitle;
-        document.querySelector('[data-i18n="hero.viewGithub"]').textContent = t.hero.viewGithub;
-        document.querySelector('[data-i18n="hero.contribute"]').textContent = t.hero.contribute;
-        
-        // Features
-        document.querySelector('[data-i18n="features.secure.title"]').textContent = t.features.secure.title;
-        document.querySelector('[data-i18n="features.secure.desc"]').textContent = t.features.secure.desc;
-        document.querySelector('[data-i18n="features.community.title"]').textContent = t.features.community.title;
-        document.querySelector('[data-i18n="features.community.desc"]').textContent = t.features.community.desc;
-        document.querySelector('[data-i18n="features.openSource.title"]').textContent = t.features.openSource.title;
-        document.querySelector('[data-i18n="features.openSource.desc"]').textContent = t.features.openSource.desc;
-        
-        // Contribute
-        document.querySelector('[data-i18n="contribute.title"]').textContent = t.contribute.title;
-        document.querySelector('[data-i18n="contribute.subtitle"]').textContent = t.contribute.subtitle;
-        document.querySelector('[data-i18n="contribute.fork"]').textContent = t.contribute.fork;
-        document.querySelector('[data-i18n="contribute.code"]').textContent = t.contribute.code;
-        document.querySelector('[data-i18n="contribute.report"]').textContent = t.contribute.report;
-        
-        // Construction Banner
-        document.querySelector('[data-i18n="construction"]').textContent = t.construction;
-        
-        // Footer
-        document.querySelector('[data-i18n="footer.copyright"]').textContent = t.footer.copyright;
+    });
+
+    // Language selection
+    languageList.forEach(lang => {
+        lang.addEventListener('click', () => {
+            const selectedLang = lang.dataset.lang;
+            localStorage.setItem('language', selectedLang);
+            
+            // Update active state
+            languageList.forEach(l => l.classList.remove('active'));
+            lang.classList.add('active');
+            
+            // Update trigger text
+            languageDisplay.textContent = selectedLang.toUpperCase();
+            
+            // Close popup
+            languagePopup.classList.remove('active');
+            
+            // Reload page to apply language
+            window.location.reload();
+        });
+    });
+
+    // Set initial language display
+    const currentLang = localStorage.getItem('language') || 'en';
+    languageDisplay.textContent = currentLang.toUpperCase();
+    languageList.forEach(lang => {
+        if (lang.dataset.lang === currentLang) {
+            lang.classList.add('active');
+        } else {
+            lang.classList.remove('active');
+        }
+    });
+
+    // Mobile menu handling
+    function updateMenuVisibility() {
+        const isMobile = window.innerWidth <= 768;
+        mobileMenuBtn.style.display = isMobile ? 'block' : 'none';
+        if (!isMobile) {
+            navLinks.classList.remove('active');
+            navLinks.style.display = 'flex';
+        } else {
+            navLinks.style.display = navLinks.classList.contains('active') ? 'flex' : 'none';
+        }
     }
 
-    // Update language translations object
-    translations['en'].features.heading = 'What We Offer';
-    translations['tr'].features.heading = 'Neler Sunuyoruz';
-    translations['de'].features.heading = 'Was Wir Bieten';
+    // Initial check and listen for window resize
+    updateMenuVisibility();
+    window.addEventListener('resize', updateMenuVisibility);
+
+    // Form submission handling
+    if (waitlistForm) {
+        waitlistForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const submitButton = waitlistForm.querySelector('button');
+            
+            try {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+                
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                formMessage.textContent = "Successfully registered! We'll contact you soon.";
+                formMessage.style.color = '#059669';
+                waitlistForm.reset();
+                
+            } catch (error) {
+                formMessage.textContent = "An error occurred. Please try again.";
+                formMessage.style.color = '#dc2626';
+                
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Join';
+            }
+        });
+    }
+
+    // System theme change detection
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                body.className = e.matches ? 'dark-theme' : 'light-theme';
+            }
+        });
+    }
 }); 
