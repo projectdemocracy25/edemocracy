@@ -1,3 +1,5 @@
+import translations from './languages.js';
+
 document.addEventListener('DOMContentLoaded', function () {
     const waitlistForm = document.getElementById('waitlist-form');
     const formMessage = document.getElementById('form-message');
@@ -31,19 +33,17 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Theme handling
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
     
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        body.className = savedTheme;
-    } else {
-        // Check system preference
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            body.className = 'dark-theme';
-        }
-    }
+    // Language handling
+    const languageSelector = document.getElementById('language-selector');
+    let currentLang = localStorage.getItem('language') || navigator.language.split('-')[0] || 'en';
+    
+    // Initialize language
+    setLanguage(currentLang);
+    languageSelector.value = currentLang;
     
     // Theme toggle functionality
     themeToggle.addEventListener('click', function() {
@@ -56,12 +56,67 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Listen for system theme changes
-    if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!localStorage.getItem('theme')) {
-                body.className = e.matches ? 'dark-theme' : 'light-theme';
-            }
-        });
+    // Language change handler
+    languageSelector.addEventListener('change', (e) => {
+        setLanguage(e.target.value);
+    });
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        mobileMenuBtn.classList.toggle('active');
+    });
+    
+    // Function to set language
+    function setLanguage(lang) {
+        if (!translations[lang]) {
+            lang = 'en'; // Fallback to English
+        }
+        
+        currentLang = lang;
+        localStorage.setItem('language', lang);
+        document.documentElement.lang = lang;
+        
+        const t = translations[lang];
+        
+        // Update all text content
+        updateTextContent(t);
+    }
+    
+    function updateTextContent(t) {
+        // Navigation
+        document.querySelector('[data-i18n="nav.about"]').textContent = t.nav.about;
+        document.querySelector('[data-i18n="nav.contribute"]').textContent = t.nav.contribute;
+        document.querySelector('[data-i18n="nav.github"]').textContent = t.nav.github;
+        
+        // Hero
+        document.querySelector('[data-i18n="hero.title"]').textContent = t.hero.title;
+        document.querySelector('[data-i18n="hero.subtitle"]').textContent = t.hero.subtitle;
+        document.querySelector('[data-i18n="hero.viewGithub"]').textContent = t.hero.viewGithub;
+        document.querySelector('[data-i18n="hero.contribute"]').textContent = t.hero.contribute;
+        
+        // Features
+        document.querySelector('[data-i18n="features.secure.title"]').textContent = t.features.secure.title;
+        document.querySelector('[data-i18n="features.secure.desc"]').textContent = t.features.secure.desc;
+        document.querySelector('[data-i18n="features.community.title"]').textContent = t.features.community.title;
+        document.querySelector('[data-i18n="features.community.desc"]').textContent = t.features.community.desc;
+        document.querySelector('[data-i18n="features.openSource.title"]').textContent = t.features.openSource.title;
+        document.querySelector('[data-i18n="features.openSource.desc"]').textContent = t.features.openSource.desc;
+        
+        // Contribute
+        document.querySelector('[data-i18n="contribute.title"]').textContent = t.contribute.title;
+        document.querySelector('[data-i18n="contribute.subtitle"]').textContent = t.contribute.subtitle;
+        document.querySelector('[data-i18n="contribute.fork"]').textContent = t.contribute.fork;
+        document.querySelector('[data-i18n="contribute.code"]').textContent = t.contribute.code;
+        document.querySelector('[data-i18n="contribute.report"]').textContent = t.contribute.report;
+        
+        // Construction Banner
+        document.querySelector('[data-i18n="construction"]').textContent = t.construction;
+        
+        // Footer
+        document.querySelector('[data-i18n="footer.copyright"]').textContent = t.footer.copyright;
     }
 }); 

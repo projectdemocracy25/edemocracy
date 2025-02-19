@@ -14,10 +14,20 @@
       <div class="container">
         <div class="nav-left">
           <h1 class="logo">E-Democracy</h1>
+          <button id="mobile-menu-btn" class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+          </button>
           <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#contribute">Contribute</a></li>
-            <li><a href="https://github.com/projectdemocracy25/edemocracy" target="_blank">GitHub</a></li>
+            <li><a href="#about" data-i18n="nav.about">About</a></li>
+            <li><a href="#contribute" data-i18n="nav.contribute">Contribute</a></li>
+            <li><a href="https://github.com/projectdemocracy25/edemocracy" target="_blank" data-i18n="nav.github">GitHub</a></li>
+            <li>
+              <select id="language-selector" class="language-selector">
+                <option value="en">English</option>
+                <option value="tr">Türkçe</option>
+                <option value="de">Deutsch</option>
+              </select>
+            </li>
           </ul>
         </div>
         <div class="nav-right">
