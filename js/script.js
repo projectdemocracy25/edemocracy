@@ -39,9 +39,27 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Language handling
     const languageSelector = document.getElementById('language-selector');
-    let currentLang = localStorage.getItem('language') || navigator.language.split('-')[0] || 'en';
     
+    // Improved language detection
+    function detectUserLanguage() {
+        // Check localStorage first
+        const savedLang = localStorage.getItem('language');
+        if (savedLang && translations[savedLang]) {
+            return savedLang;
+        }
+
+        // Try to detect from navigator
+        const browserLang = navigator.language.split('-')[0];
+        if (translations[browserLang]) {
+            return browserLang;
+        }
+
+        // Default to English
+        return 'en';
+    }
+
     // Initialize language
+    let currentLang = detectUserLanguage();
     setLanguage(currentLang);
     languageSelector.value = currentLang;
     
@@ -119,4 +137,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Footer
         document.querySelector('[data-i18n="footer.copyright"]').textContent = t.footer.copyright;
     }
+
+    // Update language translations object
+    translations['en'].features.heading = 'What We Offer';
+    translations['tr'].features.heading = 'Neler Sunuyoruz';
+    translations['de'].features.heading = 'Was Wir Bieten';
 }); 
