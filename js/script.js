@@ -2,18 +2,30 @@ document.addEventListener('DOMContentLoaded', function () {
     const waitlistForm = document.getElementById('waitlist-form');
     const formMessage = document.getElementById('form-message');
 
-    waitlistForm.addEventListener('submit', function (e) {
-        e.preventDefault(); // Prevent form from submitting traditionally
-
+    waitlistForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        
         const email = document.getElementById('email').value;
-
-        if (email) {
-            // Here you can add logic to send the email to your backend waitlist endpoint.
-            // For demonstration, we simply display a thank you message.
-            formMessage.textContent = "Thank you for joining the waitlist!";
+        const submitButton = waitlistForm.querySelector('button');
+        
+        try {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Kaydediliyor...';
+            
+            // Burada gerçek bir API çağrısı yapılabilir
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            formMessage.textContent = "Başarıyla kaydoldunuz! Size en kısa sürede ulaşacağız.";
+            formMessage.style.color = '#059669';
             waitlistForm.reset();
-        } else {
-            formMessage.textContent = "Please enter a valid email address.";
+            
+        } catch (error) {
+            formMessage.textContent = "Bir hata oluştu. Lütfen tekrar deneyin.";
+            formMessage.style.color = '#dc2626';
+            
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Katıl';
         }
     });
 }); 
