@@ -3,28 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open Democracy Platform</title>
+  <title>E-Democracy Platform</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
+<body class="light-theme">
   <!-- Header and Navigation -->
   <header>
     <nav class="navbar">
       <div class="container">
-        <h1 class="logo">OpenDemocracy</h1>
-        <ul class="nav-links">
-          <li><a href="#features">Özellikler</a></li>
-          <li><a href="#waitlist">Katıl</a></li>
-        </ul>
+        <div class="nav-left">
+          <h1 class="logo">E-Democracy</h1>
+          <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#contribute">Contribute</a></li>
+            <li><a href="https://github.com/projectdemocracy25/edemocracy" target="_blank">GitHub</a></li>
+          </ul>
+        </div>
+        <div class="nav-right">
+          <button id="theme-toggle" class="theme-toggle">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+          </button>
+        </div>
       </div>
     </nav>
     <!-- Hero Section -->
     <section class="hero">
       <div class="container">
-        <h2>Demokrasinin Geleceği</h2>
-        <p>Vatandaşların sesini duyuran, şeffaf ve güvenli platform.</p>
-        <a href="#waitlist" class="btn">Beta'ya Katıl</a>
+        <div class="hero-content">
+          <h1>The Future of Democratic Participation</h1>
+          <p class="hero-text">An open-source platform bringing transparency to politics and empowering citizen participation in democracy.</p>
+          <div class="hero-buttons">
+            <a href="https://github.com/projectdemocracy25/edemocracy" class="btn btn-primary" target="_blank">
+              <i class="fab fa-github"></i>
+              View on GitHub
+            </a>
+            <a href="#contribute" class="btn btn-secondary">
+              <i class="fas fa-code"></i>
+              Contribute
+            </a>
+          </div>
+        </div>
+        <div class="construction-banner">
+          <i class="fas fa-hard-hat"></i>
+          <p>Platform Under Construction</p>
+        </div>
       </div>
     </section>
   </header>
@@ -32,44 +56,51 @@
   <!-- Main Content -->
   <main>
     <!-- Features Section -->
-    <section id="features" class="features">
+    <section id="about" class="features">
       <div class="container">
         <h2>Neler Sunuyoruz?</h2>
         <div class="feature-grid">
           <div class="feature-card">
-            <i class="fas fa-comments"></i>
-            <h3>Topluluk Gücü</h3>
-            <p>Fikirlerinizi paylaşın ve destekleyin</p>
-          </div>
-          <div class="feature-card">
             <i class="fas fa-shield-alt"></i>
-            <h3>Güvenli Platform</h3>
-            <p>İleri düzey güvenlik önlemleri</p>
+            <h3>Secure & Transparent</h3>
+            <p>Built with security-first approach and complete transparency</p>
           </div>
           <div class="feature-card">
-            <i class="fas fa-robot"></i>
-            <h3>AI Destekli</h3>
-            <p>Akıllı öneri ve analiz sistemleri</p>
+            <i class="fas fa-users"></i>
+            <h3>Community Driven</h3>
+            <p>Developed by the community, for the community</p>
           </div>
           <div class="feature-card">
-            <i class="fas fa-check-circle"></i>
-            <h3>Şeffaflık</h3>
-            <p>Açık ve denetlenebilir süreçler</p>
+            <i class="fas fa-code-branch"></i>
+            <h3>Open Source</h3>
+            <p>Free and open source forever</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Waitlist Section -->
-    <section id="waitlist" class="waitlist">
+    <section id="contribute" class="contribute">
       <div class="container">
-        <h2>Beta Sürecine Katılın</h2>
-        <p>İlk kullanıcılarımızdan biri olun</p>
-        <form id="waitlist-form">
-          <input type="email" id="email" name="email" placeholder="E-posta adresiniz" required>
-          <button type="submit" class="btn">Katıl</button>
-        </form>
-        <p id="form-message"></p>
+        <h2>Help Build the Future</h2>
+        <p>The E-Democracy platform is currently under development. We welcome contributors of all skill levels!</p>
+        <div class="contribute-steps">
+          <a href="https://github.com/projectdemocracy25/edemocracy" class="contribute-card" target="_blank">
+            <i class="fab fa-github"></i>
+            <h3>Fork Repository</h3>
+            <p>Start with forking our GitHub repository</p>
+          </a>
+          <div class="contribute-card">
+            <i class="fas fa-code"></i>
+            <h3>Contribute Code</h3>
+            <p>Help us build new features</p>
+          </div>
+          <div class="contribute-card">
+            <i class="fas fa-bug"></i>
+            <h3>Report Issues</h3>
+            <p>Help us improve by reporting bugs</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -77,7 +108,14 @@
   <!-- Footer / Contact Section -->
   <footer>
     <div class="container">
-      <p>&copy; 2024 OpenDemocracy</p>
+      <div class="footer-content">
+        <p>&copy; 2024 E-Democracy Platform</p>
+        <div class="social-links">
+          <a href="https://github.com/projectdemocracy25/edemocracy" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
     </div>
   </footer>
 
